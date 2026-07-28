@@ -20,7 +20,7 @@ MiniMart is an e-commerce shopping web application where users can browse produc
 
 ## 📸 Project Screenshot
 
-(Add your project screenshot here)
+![MiniMart Screenshot](minimart-home.png)
 
 ## 📂 Installation
 
