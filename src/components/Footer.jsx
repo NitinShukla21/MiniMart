@@ -3,7 +3,7 @@ function Footer() {
     <footer>
 
       <h2>
-        🛒 FreshMart
+        🛒 MiniMart
       </h2>
 
       <p>
@@ -13,7 +13,7 @@ function Footer() {
       </p>
 
       <p>
-        © 2026 FreshMart
+        © 2026 MiniMart
       </p>
 
     </footer>

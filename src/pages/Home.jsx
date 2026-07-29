@@ -1,7 +1,7 @@
 function Home() {
   return (
     <div>
-      <h1>FreshMart Home Page</h1>
+      <h1>MiniMart Home Page</h1>
     </div>
   );
 }

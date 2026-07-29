@@ -5,7 +5,7 @@ function Hero() {
     <section className="hero">
 
       <h1>
-        Welcome to FreshMart 🛒
+        Welcome to MiniMart 🛒
       </h1>
 
       <h2>

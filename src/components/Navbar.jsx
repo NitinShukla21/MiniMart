@@ -45,7 +45,7 @@ function Navbar({
 
       <Link to="/">
         <h2>
-          🛒 FreshMart
+          🛒 MiniMart
         </h2>
       </Link>
 
