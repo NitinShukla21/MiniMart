@@ -14,22 +14,25 @@ import Footer from "./components/Footer";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Checkout from "./pages/Checkout";
+import Wishlist from "./pages/Wishlist";
+import ProductDetails from "./pages/ProductDetails";
 
 function App() {
+
   const [search, setSearch] = useState("");
-  const [
-    selectedCategory,
-    setSelectedCategory
-  ] = useState("All");
+
+  const [selectedCategory, setSelectedCategory] =
+    useState("All");
+
+ 
 
   return (
     <BrowserRouter>
 
       <Navbar
-        search={search}
-        setSearch={setSearch}
-      />
-
+  search={search}
+  setSearch={setSearch}
+/>
       <Routes>
 
         <Route
@@ -39,19 +42,13 @@ function App() {
               <Hero />
 
               <Category
-                selectedCategory={
-                  selectedCategory
-                }
-                setSelectedCategory={
-                  setSelectedCategory
-                }
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
               />
 
               <ProductCard
                 search={search}
-                selectedCategory={
-                  selectedCategory
-                }
+                selectedCategory={selectedCategory}
               />
             </>
           }
@@ -71,6 +68,15 @@ function App() {
           path="/checkout"
           element={<Checkout />}
         />
+
+        <Route
+  path="/wishlist"
+  element={<Wishlist />}
+/>
+<Route
+  path="/product/:id"
+  element={<ProductDetails />}
+/>
 
       </Routes>
 

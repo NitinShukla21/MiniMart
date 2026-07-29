@@ -1,42 +1,35 @@
-import {
-  useContext,
-  useState
-} from "react";
+import { useContext, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import {
-  Link,
-  useNavigate
-} from "react-router-dom";
+import { CartContext } from "../context/CartContext";
+import { WishlistContext } from "../context/WishlistContext";
 
-import {
-  CartContext
-} from "../context/CartContext";
+function Navbar({ search, setSearch }) {
 
-function Navbar({
-  search,
-  setSearch
-}) {
-
-  const {
-    totalItems
-  } = useContext(CartContext);
+  const { totalItems } = useContext(CartContext);
+  const { wishlistItems } = useContext(WishlistContext);
 
   const navigate = useNavigate();
 
-  const [
-    userName,
-    setUserName
-  ] = useState(
+  const [userName, setUserName] = useState(
     localStorage.getItem("userName")
   );
 
+  const [darkMode, setDarkMode] = useState(() => {
+  return localStorage.getItem("theme") === "dark";
+});
+
+  useEffect(() => {
+  document.body.className = darkMode ? "dark" : "";
+  localStorage.setItem(
+    "theme",
+    darkMode ? "dark" : "light"
+  );
+}, [darkMode]);
+
   function handleLogout() {
-    localStorage.removeItem(
-      "userName"
-    );
-
+    localStorage.removeItem("userName");
     setUserName(null);
-
     navigate("/");
   }
 
@@ -44,23 +37,34 @@ function Navbar({
     <nav>
 
       <Link to="/">
-        <h2>
-          🛒 MiniMart
-        </h2>
+        <h2>🛒 MiniMart</h2>
       </Link>
 
       <input
         type="text"
         placeholder="Search groceries..."
         value={search}
-        onChange={(event) =>
-          setSearch(
-            event.target.value
-          )
-        }
+        onChange={(e) => setSearch(e.target.value)}
       />
 
       <div>
+
+        <button
+  onClick={() => setDarkMode(!darkMode)}
+>
+  {darkMode ? "☀️ Switch to Light" : "🌙 Switch to Dark"}
+</button>
+        <Link to="/wishlist">
+          <button>
+            ❤️ Wishlist ({wishlistItems.length})
+          </button>
+        </Link>
+
+        <Link to="/cart">
+          <button>
+            🛒 Cart ({totalItems})
+          </button>
+        </Link>
 
         {userName ? (
           <>
@@ -69,9 +73,7 @@ function Navbar({
             </span>
 
             <button
-              onClick={
-                handleLogout
-              }
+              onClick={handleLogout}
             >
               Logout
             </button>
@@ -83,14 +85,6 @@ function Navbar({
             </button>
           </Link>
         )}
-
-        <Link to="/cart">
-          <button>
-            Cart 🛍️ (
-            {totalItems}
-            )
-          </button>
-        </Link>
 
       </div>
 

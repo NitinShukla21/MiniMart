@@ -22,8 +22,7 @@ function Cart() {
 
   const totalPrice = cartItems.reduce(
     (total, item) =>
-      total +
-      item.price * item.quantity,
+      total + item.price * item.quantity,
     0
   );
 
@@ -48,9 +47,11 @@ function Cart() {
 
         <div>
 
-          <h2>
-            Your cart is empty
-          </h2>
+          <h2>🛒 Your Cart is Empty</h2>
+
+<p>
+Add some fresh groceries to continue shopping.
+</p>
 
           <Link to="/">
             <button>
@@ -96,7 +97,7 @@ function Cart() {
                       decreaseQuantity(item.id)
                     }
                   >
-                    −
+                    ➖
                   </button>
 
                   <span>
@@ -108,7 +109,7 @@ function Cart() {
                       increaseQuantity(item.id)
                     }
                   >
-                    +
+                    ➕
                   </button>
 
                 </div>
@@ -122,7 +123,7 @@ function Cart() {
                     removeFromCart(item.id)
                   }
                 >
-                  Remove
+                  🗑 Remove
                 </button>
 
               </div>
@@ -133,15 +134,22 @@ function Cart() {
           <div className="total">
 
             <h2>
-              Total Amount: ₹{totalPrice}
-            </h2>
+  Grand Total: ₹{totalPrice.toFixed(2)}
+</h2>
 
+<p>
+  Delivery Charge: FREE 🚚
+</p>
+
+<p style={{ color: "green", fontWeight: "bold" }}>
+  You Saved ₹50 Today 🎉
+</p>
             <button
               onClick={() =>
                 navigate("/checkout")
               }
             >
-              Proceed to Checkout
+              Proceed to Secure Checkout 🔒
             </button>
 
           </div>
