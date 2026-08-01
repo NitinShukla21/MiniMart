@@ -145,9 +145,21 @@ Add some fresh groceries to continue shopping.
   You Saved ₹50 Today 🎉
 </p>
             <button
-              onClick={() =>
-                navigate("/checkout")
-              }
+              onClick={() => {
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+
+    navigate("/login");
+
+    return;
+
+  }
+
+  navigate("/checkout");
+
+}}
             >
               Proceed to Secure Checkout 🔒
             </button>

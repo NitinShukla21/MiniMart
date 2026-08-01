@@ -1,7 +1,18 @@
-import { Link } from "react-router-dom";
-
 function Hero() {
+
+  function goToProducts() {
+
+    const section =
+      document.getElementById("products");
+
+    section?.scrollIntoView({
+      behavior: "smooth"
+    });
+
+  }
+
   return (
+
     <section className="hero">
 
       <h1>
@@ -20,14 +31,16 @@ function Hero() {
         essentials.
       </p>
 
-      <Link to="/#products">
-        <button>
-          Shop Now 🛍️
-        </button>
-      </Link>
+      <button
+        onClick={goToProducts}
+      >
+        Shop Now 🛍️
+      </button>
 
     </section>
+
   );
+
 }
 
 export default Hero;

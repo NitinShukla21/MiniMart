@@ -73,11 +73,6 @@ function App() {
   path="/wishlist"
   element={<Wishlist />}
 />
-<Route
-  path="/product/:id"
-  element={<ProductDetails />}
-/>
-
       </Routes>
 
       <Footer />

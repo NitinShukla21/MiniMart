@@ -1,105 +1,79 @@
 import { useState } from "react";
-import {
-  useNavigate
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
+  const navigate = useNavigate();
 
-  const [
-    email,
-    setEmail
-  ] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [
-    password,
-    setPassword
-  ] = useState("");
+  async function handleLogin(e) {
+    e.preventDefault();
 
-  const navigate =
-    useNavigate();
-
-  function handleLogin(
-    event
-  ) {
-
-    event.preventDefault();
-
-    if (
-      email === "" ||
-      password === ""
-    ) {
-      alert(
-        "Please enter email and password"
+    try {
+      const res = await axios.post(
+        ""https://minimart-1-epl4.onrender.com/api/users/login"",
+        {
+          email,
+          password
+        }
       );
 
-      return;
+      localStorage.setItem(
+        "token",
+        res.data.token
+      );
+
+      localStorage.setItem(
+        "userName",
+        res.data.user.name
+      );
+
+      alert("Login Successful ✅");
+
+      navigate("/");
+
+      window.location.reload();
+
+    } catch (error) {
+
+      alert(
+        error.response?.data?.message ||
+        "Login Failed"
+      );
+
     }
-
-    const userName =
-      email.split("@")[0];
-
-    localStorage.setItem(
-      "userName",
-      userName
-    );
-
-    alert(
-      "Login successful!"
-    );
-
-    navigate("/");
   }
 
   return (
     <div className="form-page">
 
-      <form
-        onSubmit={handleLogin}
-      >
+      <form onSubmit={handleLogin}>
 
-        {/* Back button */}
-        <button
-          type="button"
-          onClick={() =>
-            navigate("/")
-          }
-          style={{
-            width: "auto",
-            marginBottom: "20px"
-          }}
-        >
-          ← Back to Home
-        </button>
-
-        <h1>
-          Login
-        </h1>
+        <h2>Login</h2>
 
         <input
           type="email"
           placeholder="Email"
           value={email}
-          onChange={(event) =>
-            setEmail(
-              event.target.value
-            )
+          onChange={(e) =>
+            setEmail(e.target.value)
           }
+          required
         />
 
         <input
           type="password"
           placeholder="Password"
           value={password}
-          onChange={(event) =>
-            setPassword(
-              event.target.value
-            )
+          onChange={(e) =>
+            setPassword(e.target.value)
           }
+          required
         />
 
-        <button
-          type="submit"
-        >
+        <button type="submit">
           Login
         </button>
 

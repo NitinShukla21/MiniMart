@@ -7,6 +7,8 @@ import {
   useNavigate
 } from "react-router-dom";
 
+import axios from "axios";
+
 import {
   CartContext
 } from "../context/CartContext";
@@ -18,92 +20,75 @@ function Checkout() {
     setCartItems
   } = useContext(CartContext);
 
-  const navigate =
-    useNavigate();
+  const navigate = useNavigate();
 
-  const [
-    name,
-    setName
-  ] = useState("");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
 
-  const [
-    address,
-    setAddress
-  ] = useState("");
+  const totalPrice = cartItems.reduce(
+    (total, item) =>
+      total + item.price * item.quantity,
+    0
+  );
 
-  const [
-    phone,
-    setPhone
-  ] = useState("");
-
-  const totalPrice =
-    cartItems.reduce(
-      (total, item) =>
-        total +
-        item.price *
-        item.quantity,
-      0
-    );
-
-  function placeOrder(
-    event
-  ) {
+  async function placeOrder(event) {
 
     event.preventDefault();
 
-    if (
-      !name ||
-      !address ||
-      !phone
-    ) {
-      alert(
-        "Please fill all details"
-      );
-
+    if (!name || !address || !phone) {
+      alert("Please fill all details");
       return;
     }
 
-    alert(
-      "Order placed successfully! 🎉"
-    );
+    try {
 
-    setCartItems([]);
+      await axios.post(
+        ""https://minimart-1-epl4.onrender.com/api/orders"",
+        {
+          userName: name,
+          items: cartItems,
+          totalAmount: totalPrice
+        }
+      );
 
-    navigate("/");
+      alert("Order placed successfully! 🎉");
+
+      setCartItems([]);
+
+      navigate("/");
+
+    } catch (error) {
+
+      alert(
+        error.response?.data?.message ||
+        "Order Failed"
+      );
+
+    }
+
   }
 
   return (
     <div className="form-page">
 
-      <form
-        onSubmit={
-          placeOrder
-        }
-      >
+      <form onSubmit={placeOrder}>
 
-        <h1>
-          Checkout 🛒
-        </h1>
+        <h1>Checkout 🛒</h1>
 
         <input
           placeholder="Your name"
           value={name}
-          onChange={
-            (event) =>
-              setName(
-                event.target.value
-              )
+          onChange={(e) =>
+            setName(e.target.value)
           }
         />
 
         <textarea
           placeholder="Delivery address"
           value={address}
-          onChange={
-            (event) =>
-              setAddress(
-                event.target.value
-              )
+          onChange={(e) =>
+            setAddress(e.target.value)
           }
         />
 
@@ -111,22 +96,14 @@ function Checkout() {
           type="tel"
           placeholder="Phone number"
           value={phone}
-          onChange={
-            (event) =>
-              setPhone(
-                event.target.value
-              )
+          onChange={(e) =>
+            setPhone(e.target.value)
           }
         />
 
-        <h2>
-          Total:
-          ₹{totalPrice}
-        </h2>
+        <h2>Total: ₹{totalPrice}</h2>
 
-        <button
-          type="submit"
-        >
+        <button type="submit">
           Place Order
         </button>
 
